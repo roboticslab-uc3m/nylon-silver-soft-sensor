@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 import torch
 from torch import Tensor
@@ -14,9 +15,6 @@ from vclog import Logger
 
 from .model_dataset import ModelDataset
 from .eval_info import EvalInfo
-
-# tmp
-import matplotlib.pyplot as plt
 
 
 class GaussianRegressorScaffold:
@@ -60,6 +58,9 @@ class GaussianRegressorScaffold:
             batch_losses: list[float] = []
             for j, (x_batch, y_batch) in enumerate(data_loader):
                 optimizer.zero_grad()
+
+                x_batch = x_batch.to(self.device, dtype=self.dtype)
+                y_batch = y_batch.to(self.device, dtype=self.dtype)
 
                 output: Tensor = self.model(x_batch)
 
