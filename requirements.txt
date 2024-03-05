@@ -1,6 +1,2 @@
-numpy
-pandas
-matplotlib
-torch
-gpytorch
-vclog
+catasta
+gdown

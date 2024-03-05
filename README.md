@@ -1,20 +1,16 @@
-# Design of a Soft Sensor based on Silver-Coated Polyamide Threads and Stress-Strain Modeling via Gaussian Processes
+# Silver-Coated Polyamide Threads Stress-Strain Soft Sensor Modeling
 
-This is the official implementation of the paper **Design of a Soft Sensor based on Silver-Coated Polyamide Threads and Stress-Strain Modeling via Gaussian Processes**.
+This is the official repository of the implementation of the modeling of the silver-coated sof strain-stress sensor. The implementation is made using [catasta](https://github.com/vistormu/catasta), a simple custom library that facilitates the training and inference of Deep Learning models.
 
-## Abstract
+The code applies for the following papers:
 
-The demand for reliable and efficient soft sensors has grown exponentially with the evolution of wearable devices and smart textiles. However, existing soft sensors often face challenges related to hysteresis, noise, and accuracy, hindering their seamless integration into practical applications. Our research presents a pioneering stress-strain soft sensor model based on silver-coated polyamide threads, augmented with additional silicone and graphite coatings for enhanced properties. Specifically, the silicone coating proves instrumental in elevating the sensor’s gauge factor and reducing noise, resulting in heightened accuracy. The extensive data analysis reveals the presence of hysteresis and non-linearities; however, our data exhibits remarkable robustness, as indicated by the high Spearman correlation coefficient values. In the context of system identification, a comparative analysis between traditional regression methods and Gaussian Process Regression (GPs Regression) demonstrates the superior performance of GPs: this technique outperforms conventional regression techniques, obtaining 8.75±4.06% Root Mean Square Error (RMSE) compared to the 12.70±7.04% error observed in traditional methods. This research not only advances the field of soft sensor technology by developing an accurate, affordable and adaptable device, but also offers valuable insights into highly effective system identification techniques tailored for wearable devices.
+- Design of a Soft Sensor based on Silver-Coated Polyamide Threads and Stress-Strain Modeling via Gaussian Processes
+- Flexible strain-stress soft sensor modeling: integration and comparative analysis of Deep Learning architectures for regression
 
-## Contact
-
-Corresponding authors:
-- cballest@pa.uc3m.es
-- vimunozs@pa.uc3m.es
 
 ## Installation
 
-To have an isolated testing, we recommend installing a virtual environment like [Miniconda](https://docs.conda.io/projects/miniconda/en/latest/). If you don't know how to install it, check out [this tutorial](https://vistormu.github.io/posts/conda.html).
+We recommend installing a virtual environment like [Miniconda](https://docs.conda.io/projects/miniconda/en/latest/), and install a version of Python higher that 3.10.x, as the code uses type hinting.
 
 Once you have your virtual environment activated, clone the repository:
 
@@ -28,12 +24,55 @@ and install the dependencies:
 pip install -r requirements
 ```
 
-Then, run the `main.py` file:
+## Reproducibility
+
+To reproduce the paper results, first, download the data using:
+
+```python
+python download.py
+```
+
+If it fails, download the data [for here](https://drive.google.com/drive/folders/1DQnxLZCCgcCv9BXFKNBR8RIi0E_foTqF?usp=sharing), place the dataset in `data/`, comment the `download()` function in `download.py` and run again the script.
+
+To train all models, run:
 
 ```bash
-python main.py
+python train.py
 ```
+
+To make the predictions using the pre-trained models, use:
+
+```bash
+python inference.py
+```
+
+
+## Contact
+
+Corresponding authors:
+- vimunozs@pa.uc3m.es
+- cballest@pa.uc3m.es
 
 ## Citation
 
-(Under review)
+#### Design of a Soft Sensor based on Silver-Coated Polyamide Threads and Stress-Strain Modeling via Gaussian Processes
+
+```bib
+@article{Ballester_2024,
+ author = {Ballester, Carmen and Muñoz, Víctor and Copaci, Dorin and Moreno, Luis and Blanco, Dolores},
+ doi = {10.1016/j.sna.2024.115058},
+ issn = {0924-4247},
+ journal = {Sensors and Actuators A: Physical},
+ month = {March},
+ pages = {115058},
+ publisher = {Elsevier BV},
+ title = {Design of a soft sensor based on silver-coated polyamide threads and stress-strain modeling via Gaussian processes},
+ url = {http://dx.doi.org/10.1016/j.sna.2024.115058},
+ volume = {367},
+ year = {2024}
+}
+```
+
+#### Flexible strain-stress soft sensor modeling: integration and comparative analysis of Deep Learning architectures for regression
+
+(under review)
