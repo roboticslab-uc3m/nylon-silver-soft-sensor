@@ -32,7 +32,7 @@ To reproduce the paper results, first, download the data using:
 python download.py
 ```
 
-If it fails, download the data [for here](https://drive.google.com/drive/folders/1DQnxLZCCgcCv9BXFKNBR8RIi0E_foTqF?usp=sharing), place the dataset in `data/`, comment the `download()` function in `download.py` and run again the script.
+If it fails, download the data [from here](https://drive.google.com/drive/folders/1DQnxLZCCgcCv9BXFKNBR8RIi0E_foTqF?usp=sharing), place the dataset in `data/`, comment the `download()` function in `download.py` and run again the script.
 
 To train all models, run:
 
