@@ -51,13 +51,11 @@ def train(model, context_length: int, dataset_name: str) -> None:
             splits=(train_split, 0.0, 1 - train_split) if isinstance(model, ApproximateGPRegressor) else (train_split, 1 - train_split, 0.0),
         )
 
-        save_path: str = f"models/{dataset_name}/{signal}/"
         scaffold = RegressionScaffold(
             model=model,
             dataset=dataset,
             optimizer="adamw",
             loss_function="variational_elbo" if isinstance(model, ApproximateGPRegressor) else "mse",
-            # save_path=save_path,
         )
 
         print(f"\nTraining {signal}...")
@@ -67,12 +65,13 @@ def train(model, context_length: int, dataset_name: str) -> None:
             batch_size=256,
             lr=1e-4,
         )
-
         print(f"Best loss: {train_info.best_train_loss}")
 
         eval_info: RegressionEvalInfo = scaffold.evaluate()
-
         print(eval_info)
+
+        save_path: str = f"models/{dataset_name}/{signal}/"
+        scaffold.save(path=save_path)
 
 
 def gp() -> None:
@@ -157,7 +156,7 @@ def mamba() -> None:
 def fnn() -> None:
     strain_context_length: int = 720
     strain_model = FeedforwardRegressor(
-        input_dim=strain_context_length,
+        context_length=strain_context_length,
         hidden_dims=[64, 128, 256],
         dropout=0.1,
         use_batch_norm=True,
@@ -166,7 +165,7 @@ def fnn() -> None:
 
     stress_context_length: int = 960
     stress_model = FeedforwardRegressor(
-        input_dim=stress_context_length,
+        context_length=stress_context_length,
         hidden_dims=[128, 256, 64],
         dropout=0.1,
         use_batch_norm=True,

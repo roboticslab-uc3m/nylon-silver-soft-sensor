@@ -171,7 +171,7 @@ def mamba() -> None:
 def fnn() -> None:
     strain_context_length: int = 720
     strain_model = FeedforwardRegressor(
-        input_dim=strain_context_length,
+        context_length=strain_context_length,
         hidden_dims=[64, 128, 256],
         dropout=0.1,
         use_batch_norm=True,
@@ -180,7 +180,7 @@ def fnn() -> None:
 
     stress_context_length: int = 960
     stress_model = FeedforwardRegressor(
-        input_dim=stress_context_length,
+        context_length=stress_context_length,
         hidden_dims=[128, 256, 64],
         dropout=0.1,
         use_batch_norm=True,
