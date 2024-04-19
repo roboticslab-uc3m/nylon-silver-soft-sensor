@@ -55,24 +55,33 @@ def structure() -> None:
     Logger.info("STRESS")
     for filename in stress_filenames:
         name: str = filename.split(".")[0]
-        dir_name: str = paper_stress_data_dir + name + "/"
+
+        dir_name: str = os.path.join(paper_stress_data_dir, name)
+        train_dir: str = os.path.join(dir_name, "train/")
+        val_dir: str = os.path.join(dir_name, "val/")
         create_or_delete_files(dir_name)
+        create_or_delete_files(train_dir)
+        create_or_delete_files(val_dir)
 
         Logger.info(f"Processing {name}")
-        os.system(f"cp {stress_data_dir}* {dir_name}")
-        os.system(f"mv {dir_name}{filename} {dir_name}zz{filename}")
+        os.system(f"cp {stress_data_dir}* {train_dir}")
+        os.system(f"mv {train_dir}{filename} {val_dir}")
 
     print()
     Logger.info("STRAIN")
     for filename in strain_filenames:
         name: str = filename.split(".")[0]
 
-        dir_name: str = paper_strain_data_dir + name + "/"
+        dir_name: str = os.path.join(paper_strain_data_dir, name)
+        train_dir: str = os.path.join(dir_name, "train/")
+        val_dir: str = os.path.join(dir_name, "val/")
         create_or_delete_files(dir_name)
+        create_or_delete_files(train_dir)
+        create_or_delete_files(val_dir)
 
         Logger.info(f"Processing {name}")
-        os.system(f"cp {strain_data_dir}* {dir_name}")
-        os.system(f"mv {dir_name}{filename} {dir_name}zz{filename}")
+        os.system(f"cp {strain_data_dir}* {train_dir}")
+        os.system(f"mv {train_dir}{filename} {val_dir}")
 
 
 def download() -> None:

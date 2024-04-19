@@ -1,14 +1,13 @@
 import os
 
+from catasta import CatastaDataset, Scaffold
 from catasta.models import (
     ApproximateGPRegressor,
     TransformerRegressor,
     MambaRegressor,
     FeedforwardRegressor,
 )
-from catasta.datasets import RegressionDataset
-from catasta.scaffolds import RegressionScaffold
-from catasta.dataclasses import RegressionTrainInfo, RegressionEvalInfo
+from catasta.dataclasses import TrainInfo
 from catasta.transformations import (
     Normalization,
     Decimation,
@@ -41,17 +40,14 @@ def train(model, context_length: int, dataset_name: str) -> None:
 
     for signal in signals:
         root: str = os.path.join(dataset_path, signal)
-        n_files: int = len(os.listdir(root))
-
-        train_split: float = (n_files - 1) / n_files
-        dataset = RegressionDataset(
+        dataset = CatastaDataset(
             root=root,
+            task="regression",
             input_transformations=input_trasnsformations,
             output_transformations=output_trasnsformations,
-            splits=(train_split, 0.0, 1 - train_split) if isinstance(model, ApproximateGPRegressor) else (train_split, 1 - train_split, 0.0),
         )
 
-        scaffold = RegressionScaffold(
+        scaffold = Scaffold(
             model=model,
             dataset=dataset,
             optimizer="adamw",
@@ -60,18 +56,19 @@ def train(model, context_length: int, dataset_name: str) -> None:
 
         print(f"\nTraining {signal}...")
 
-        train_info: RegressionTrainInfo = scaffold.train(
+        train_info: TrainInfo = scaffold.train(
             epochs=100,
             batch_size=256,
             lr=1e-4,
+            early_stopping=True,
         )
         print(f"Best loss: {train_info.best_train_loss}")
 
-        eval_info: RegressionEvalInfo = scaffold.evaluate()
+        eval_info = scaffold.evaluate()
         print(eval_info)
 
         save_path: str = f"models/{dataset_name}/{signal}/"
-        scaffold.save(path=save_path)
+        scaffold.save(save_path)
 
 
 def gp() -> None:
