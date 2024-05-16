@@ -1,2 +1,2 @@
-catasta
+catasta==0.2.0
 gdown
